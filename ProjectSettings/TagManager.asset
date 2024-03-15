@@ -9,6 +9,10 @@ TagManager:
   - CHARISMA
   - FLY
   - INVISIBLE
+  - ANTIMAGIC
+  - THREE
+  - ANTITWO
+  - RESET
   layers:
   - Default
   - TransparentFX

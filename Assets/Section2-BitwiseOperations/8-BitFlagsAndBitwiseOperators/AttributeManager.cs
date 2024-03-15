@@ -22,6 +22,10 @@ public class AttributeManager : MonoBehaviour
         else if (other.CompareTag("CHARISMA")) { attributes |= CHARISMA; }
         else if (other.CompareTag("FLY")) { attributes |= FLY; }
         else if (other.CompareTag("INVISIBLE")) { attributes |= INVISIBLE; }
+        else if (other.CompareTag("ANTIMAGIC")) { attributes &= ~MAGIC; }
+        else if (other.CompareTag("THREE")) { attributes |= INTELLIGENCE | MAGIC | CHARISMA; }
+        else if (other.CompareTag("ANTITWO")) { attributes &= ~(INTELLIGENCE | MAGIC); }
+        else if (other.CompareTag("RESET")) { attributes = 0; }
     }
 
     // Start is called before the first frame update
