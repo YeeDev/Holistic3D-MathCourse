@@ -1,7 +1,8 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class AttributeManager : MonoBehaviour
 {
@@ -11,21 +12,49 @@ public class AttributeManager : MonoBehaviour
     static public int FLY = 2;
     static public int INVISIBLE = 1;
 
-    public Text attributeDisplay;
-    int attributes = 0;
 
-    //You can add attributes by using bit flags, in this case, using the bitwise operator OR (|) 
+    public Text attributeDisplay;
+    public int attributes = 0;
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("MAGIC")) { attributes |= MAGIC; }
-        else if (other.CompareTag("INTELLIGENCE")) { attributes |= INTELLIGENCE; }
-        else if (other.CompareTag("CHARISMA")) { attributes |= CHARISMA; }
-        else if (other.CompareTag("FLY")) { attributes |= FLY; }
-        else if (other.CompareTag("INVISIBLE")) { attributes |= INVISIBLE; }
-        else if (other.CompareTag("ANTIMAGIC")) { attributes &= ~MAGIC; }
-        else if (other.CompareTag("THREE")) { attributes |= INTELLIGENCE | MAGIC | CHARISMA; }
-        else if (other.CompareTag("ANTITWO")) { attributes &= ~(INTELLIGENCE | MAGIC); }
-        else if (other.CompareTag("RESET")) { attributes = 0; }
+        if(other.gameObject.tag == "MAGIC")
+        {
+            attributes |= MAGIC;
+        }
+        else if (other.gameObject.tag == "INTELLIGENCE")
+        {
+            attributes |= INTELLIGENCE;
+        }
+        else if (other.gameObject.tag == "CHARISMA")
+        {
+            attributes |= CHARISMA;
+        }
+        else if (other.gameObject.tag == "FLY")
+        {
+            attributes |= FLY;
+        }
+        else if (other.gameObject.tag == "INVISIBLE")
+        {
+            attributes |= INVISIBLE;
+        }
+        else if (other.gameObject.tag == "ANTIMAGIC")
+        {
+            attributes &= ~MAGIC;
+        }
+        else if (other.gameObject.tag == "REMOVE")
+        {
+            attributes &= ~ (INTELLIGENCE | MAGIC);
+        }
+        else if (other.gameObject.tag == "ADD")
+        {
+            attributes |= (INTELLIGENCE | MAGIC | CHARISMA);
+        }
+        else if (other.gameObject.tag == "RESET")
+        {
+            attributes = 0;
+        }
+
     }
 
     // Start is called before the first frame update
