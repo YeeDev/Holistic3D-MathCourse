@@ -4,14 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - MAGIC
-  - INTELLIGENCE
-  - CHARISMA
-  - FLY
-  - INVISIBLE
-  - MAGIC_DOOR
-  - DOOR
-  - GOLDEN
+  - Woods
+  - Desert
+  - Dirt
+  - Pasture
+  - Grain
+  - Rock
+  - Water
   layers:
   - Default
   - TransparentFX
