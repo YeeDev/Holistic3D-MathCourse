@@ -13,6 +13,7 @@ public class CreateBoard : MonoBehaviour
     public Text score;
     GameObject[] tiles;
     long dirtBB = 0;
+    long desertBB = 0;
     long treeBB = 0;
     long playerBB = 0;
 
@@ -33,7 +34,10 @@ public class CreateBoard : MonoBehaviour
                 if (tile.tag == "Dirt")
                 {
                     dirtBB = SetCellState(dirtBB, row, column);
-                    //PrintBB("Dirt", dirtBB);
+                }
+                else if (tile.tag == "Desert")
+                {
+                    desertBB = SetCellState(desertBB, row, column);
                 }
             }
         }
@@ -86,6 +90,11 @@ public class CreateBoard : MonoBehaviour
         return count;
     }
 
+    void CalculateScore()
+    {
+        score.text = "Score: " + (CellCount(dirtBB & playerBB) * 10 + CellCount(desertBB & playerBB) * 2);
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -98,12 +107,14 @@ public class CreateBoard : MonoBehaviour
                 int r = (int)hit.transform.position.z;
                 int c = (int)hit.transform.position.x;
 
-                if (GetCellState(dirtBB & ~treeBB, r, c))
+                if (GetCellState((dirtBB | desertBB) & ~treeBB, r, c))
                 {
                     GameObject house = Instantiate(housePrefab);
                     house.transform.parent = hit.collider.transform;
                     house.transform.localPosition = Vector3.zero;
                     playerBB = SetCellState(playerBB, r, c);
+
+                    CalculateScore();
                 }
             }
         }
