@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class DoorManager : MonoBehaviour
 {
-    int doorType = AttributeManager.MAGIC;
+    [SerializeField] ATTRIBUTES doorType;
+
+    AttributeManager player;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if ((collision.gameObject.GetComponent<AttributeManager>().attributes & doorType) != 0)
+        player = collision.gameObject.GetComponent<AttributeManager>();
+
+        if ((player.attributes & (int)doorType) != 0)
         {
             GetComponent<BoxCollider>().isTrigger = true;
         }
@@ -17,16 +21,17 @@ public class DoorManager : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         GetComponent<BoxCollider>().isTrigger = false;
-    }
 
-    void Start()
-    {
-        
+        //player?.RemoveAttribute(doorType);
     }
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public enum ATTRIBUTES
+{
+    ALL = 31,
+    MAGIC = 16,
+    INTELLIGENCE = 8,
+    CHARISMA = 4,
+    FLY = 2,
+    INVISIBLE = 1
 }

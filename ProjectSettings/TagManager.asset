@@ -9,10 +9,9 @@ TagManager:
   - CHARISMA
   - FLY
   - INVISIBLE
-  - ANTIMAGIC
-  - THREE
-  - ANTITWO
-  - RESET
+  - MAGIC_DOOR
+  - DOOR
+  - GOLDEN
   layers:
   - Default
   - TransparentFX

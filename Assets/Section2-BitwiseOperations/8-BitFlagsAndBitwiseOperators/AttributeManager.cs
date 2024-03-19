@@ -6,64 +6,23 @@ using System;
 
 public class AttributeManager : MonoBehaviour
 {
-    static public int MAGIC = 16;
-    static public int INTELLIGENCE = 8;
-    static public int CHARISMA = 4;
-    static public int FLY = 2;
-    static public int INVISIBLE = 1;
-
-
     public Text attributeDisplay;
     public int attributes = 0;
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "MAGIC")
-        {
-            attributes |= MAGIC;
-        }
-        else if (other.gameObject.tag == "INTELLIGENCE")
-        {
-            attributes |= INTELLIGENCE;
-        }
-        else if (other.gameObject.tag == "CHARISMA")
-        {
-            attributes |= CHARISMA;
-        }
-        else if (other.gameObject.tag == "FLY")
-        {
-            attributes |= FLY;
-        }
-        else if (other.gameObject.tag == "INVISIBLE")
-        {
-            attributes |= INVISIBLE;
-        }
-        else if (other.gameObject.tag == "ANTIMAGIC")
-        {
-            attributes &= ~MAGIC;
-        }
-        else if (other.gameObject.tag == "REMOVE")
-        {
-            attributes &= ~ (INTELLIGENCE | MAGIC);
-        }
-        else if (other.gameObject.tag == "ADD")
-        {
-            attributes |= (INTELLIGENCE | MAGIC | CHARISMA);
-        }
-        else if (other.gameObject.tag == "RESET")
-        {
-            attributes = 0;
-        }
+        if (other.gameObject.tag == "MAGIC") { attributes |= (int)ATTRIBUTES.MAGIC; }
+        else if (other.gameObject.tag == "INTELLIGENCE") { attributes |= (int)ATTRIBUTES.INTELLIGENCE; }
+        else if (other.gameObject.tag == "CHARISMA") { attributes |= (int)ATTRIBUTES.CHARISMA; }
+        else if (other.gameObject.tag == "FLY") { attributes |= (int)ATTRIBUTES.FLY; }
+        else if (other.gameObject.tag == "INVISIBLE") { attributes |= (int)ATTRIBUTES.INVISIBLE; }
+        else if (other.gameObject.tag == "GOLDEN") { attributes |= (int)ATTRIBUTES.ALL; }
 
+        if (!other.gameObject.CompareTag("DOOR")) { Destroy(other.gameObject); }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public void RemoveAttribute(ATTRIBUTES toRemove) => attributes &= ~(int)ATTRIBUTES.MAGIC;
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 screenPoint = Camera.main.WorldToScreenPoint(this.transform.position);
