@@ -9,7 +9,7 @@ public class ObjectManager : MonoBehaviour
     public Vector3 objPosition;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GameObject obj = Instantiate(objPrefab,
                                         new Vector3(Random.Range(-100, 100),
