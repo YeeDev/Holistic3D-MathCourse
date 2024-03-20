@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class ObjectManager : MonoBehaviour
 {
     public GameObject objPrefab;
+    public Vector3 objPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class ObjectManager : MonoBehaviour
                                         Quaternion.identity);
 
         Debug.Log($"Fuel location: {obj.transform.position}");
+        objPosition = obj.transform.position;
     }
 
     // Update is called once per frame
