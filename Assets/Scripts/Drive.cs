@@ -10,15 +10,10 @@ public class Drive : MonoBehaviour
 
     private void Start()
     {
+        transform.up = HolisticMath.LookAt2D(new Coords(transform.up), new Coords(transform.position), new Coords(fuel.transform.position)).ToVector();
         direction = fuel.transform.position - transform.position;
         Coords dirNormal = HolisticMath.GetNormal(new Coords(direction));
         direction = dirNormal.ToVector();
-        float a = HolisticMath.Angle(new Coords(transform.up), new Coords(direction));
-
-        bool clockwise = HolisticMath.Cross(new Coords(transform.up), dirNormal).z < 0;
-
-        Coords newDir = HolisticMath.Rotate(new Coords(transform.up), a, clockwise);
-        transform.up = newDir.ToVector();
     }
 
     void Update()

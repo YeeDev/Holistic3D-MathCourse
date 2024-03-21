@@ -38,6 +38,16 @@ public class HolisticMath
         return Mathf.Acos(dotDivide); //This is radians. For degrees * 180/PI;
     }
 
+    static public Coords LookAt2D(Coords forwardVector, Coords position, Coords focusPoint)
+    {
+        Coords direction = new Coords(focusPoint.ToVector() - position.ToVector());
+        float angle = HolisticMath.Angle(forwardVector, direction);
+
+        bool clockwise = HolisticMath.Cross(forwardVector, direction).z < 0;
+
+        return HolisticMath.Rotate(forwardVector, angle, clockwise);
+    }
+
     static public Coords Rotate(Coords vector, float angle, bool clockwise) //In radians
     {
         if (clockwise)
