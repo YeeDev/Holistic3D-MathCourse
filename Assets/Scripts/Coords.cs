@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coords
-{
+public class Coords {
 
     public float x;
     public float y;
@@ -32,7 +31,7 @@ public class Coords
 
     public override string ToString()
     {
-        return "(" + x + "," + y + "," + z + ")";
+        return"(" + x + "," + y + "," + z +")";
     }
 
     public Vector3 ToVector()
