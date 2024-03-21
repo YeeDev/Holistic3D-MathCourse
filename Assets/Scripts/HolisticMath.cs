@@ -6,7 +6,7 @@ public class HolisticMath
 {
     static public Coords GetNormal(Coords vector)
     {
-        float magnitude = Distance(new Coords(0,0,0), vector);
+        float magnitude = Distance(new Coords(0, 0, 0), vector);
         vector.x /= magnitude;
         vector.y /= magnitude;
         vector.z /= magnitude;
