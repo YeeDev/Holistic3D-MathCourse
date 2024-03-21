@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Drive : MonoBehaviour
 {
-    float speed = 0.01f;
+    float speed = 5f;
     public GameObject fuel;
     Vector3 direction;
     float stoppingDistance = 0.1f;
@@ -11,13 +11,15 @@ public class Drive : MonoBehaviour
     private void Start()
     {
         direction = fuel.transform.position - transform.position;
+        Coords dirNormal = HolisticMath.GetNormal(new Coords(direction));
+        direction = dirNormal.ToVector();
     }
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, fuel.transform.position) > stoppingDistance)
+        if(HolisticMath.Distance(new Coords(transform.position), new Coords(fuel.transform.position)) > stoppingDistance)
         {
-            this.transform.position += direction * speed;
+            this.transform.position += direction * speed * Time.deltaTime;
         } 
     }
 }
