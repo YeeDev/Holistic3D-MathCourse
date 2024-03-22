@@ -66,4 +66,21 @@ public class Coords
         lineRenderer.endWidth = width;
     }
 
+    static public Coords operator + (Coords a, Coords b)
+    {
+        Coords c = new Coords(a.x + b.x, a.y + b.y, a.z + b.z);
+        return c;
+    }
+
+    static public Coords operator -(Coords a, Coords b)
+    {
+        Coords c = new Coords(a.x - b.x, a.y - b.y, a.z - b.z);
+        return c;
+    }
+
+    static public Coords operator *(Coords a, float f)
+    {
+        Coords c = new Coords(a.x * f, a.y * f, a.z * f);
+        return c;
+    }
 }
