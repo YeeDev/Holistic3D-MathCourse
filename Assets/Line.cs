@@ -19,6 +19,13 @@ public class Line
         v = new Coords(B.x - A.x, B.y - A.y, B.z - A.z);
     }
 
+    public Line(Coords A, Coords v)
+    {
+        this.A = A;
+        B = A + v;
+        this.v = v;
+    }
+
     public Coords Lerp(float t)
     {
         t = type == LINETYPE.SEGMENT ? Mathf.Clamp(t, 0, 1) :
