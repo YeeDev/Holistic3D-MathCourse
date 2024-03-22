@@ -17,6 +17,7 @@ public class Line : MonoBehaviour
 
     public Coords GetPointAt(float t)
     {
+        //Coords tCoord = new Coords(A.ToVector() + v.ToVector() * t); Done like a normal human being
         float xt = A.x + v.x * t;
         float yt = A.y + v.y * t;
         float zt = A.z + v.z * t;
