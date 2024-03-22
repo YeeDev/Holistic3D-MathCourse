@@ -24,6 +24,19 @@ public class HolisticMath
 
     }
 
+    static public Coords Lerp(Coords A, Coords B, float t)
+    {
+        t = Mathf.Clamp(t, 0, 1);
+
+        Coords vector = new Coords(B.x - A.x, B.y - A.y, B.z - A.z);
+
+        float xt = A.x + vector.x * t;
+        float yt = A.y + vector.y * t;
+        float zt = A.z + vector.z * t;
+
+        return new Coords(xt, yt, zt);
+    }
+
     static public float Square(float value)
     {
         return value * value;
