@@ -26,6 +26,18 @@ public class Line
         this.v = v;
     }
 
+    public float IntersectsAt(Line l)
+    {
+        Coords c = l.A - A;
+        Coords uPerp = Coords.Perp(l.v);
+        return HolisticMath.Dot(uPerp, c) / HolisticMath.Dot(uPerp, v);
+    }
+
+    public void Draw(float width, Color col)
+    {
+        Coords.DrawLine(A, B, width, col);
+    }
+
     public Coords Lerp(float t)
     {
         t = type == LINETYPE.SEGMENT ? Mathf.Clamp(t, 0, 1) :
