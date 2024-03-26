@@ -24,13 +24,23 @@ public class Line
         this.A = A;
         B = A + v;
         this.v = v;
+        type = LINETYPE.SEGMENT;
     }
 
     public float IntersectsAt(Line l)
     {
+        if (HolisticMath.Dot(Coords.Perp(l.v), v) == 0) { return float.NaN; }
+
         Coords c = l.A - A;
         Coords uPerp = Coords.Perp(l.v);
-        return HolisticMath.Dot(uPerp, c) / HolisticMath.Dot(uPerp, v);
+        float t = HolisticMath.Dot(uPerp, c) / HolisticMath.Dot(uPerp, v);
+
+        if ((t < 0 || t > 1) && type == LINETYPE.SEGMENT)
+        {
+            return float.NaN;
+        }
+
+        return t;
     }
 
     public void Draw(float width, Color col)
