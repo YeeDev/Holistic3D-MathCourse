@@ -1,9 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coords
-{
+public class Coords {
 
     public float x;
     public float y;
@@ -32,12 +31,24 @@ public class Coords
 
     public override string ToString()
     {
-        return "(" + x + "," + y + "," + z + ")";
+        return"(" + x + "," + y + "," + z +")";
     }
 
     public Vector3 ToVector()
     {
         return new Vector3(x, y, z);
+    }
+
+    static public Coords operator+ (Coords a, Coords b)
+    {
+        Coords c = new Coords(a.x + b.x, a.y + b.y, a.z + b.z);
+        return c;
+    }
+
+    static public Coords operator- (Coords a, Coords b)
+    {
+        Coords c = new Coords(a.x - b.x, a.y - b.y, a.z - b.z);
+        return c;
     }
 
     static public Coords Perp(Coords v)
@@ -71,21 +82,4 @@ public class Coords
         lineRenderer.endWidth = width;
     }
 
-    static public Coords operator + (Coords a, Coords b)
-    {
-        Coords c = new Coords(a.x + b.x, a.y + b.y, a.z + b.z);
-        return c;
-    }
-
-    static public Coords operator -(Coords a, Coords b)
-    {
-        Coords c = new Coords(a.x - b.x, a.y - b.y, a.z - b.z);
-        return c;
-    }
-
-    static public Coords operator *(Coords a, float f)
-    {
-        Coords c = new Coords(a.x * f, a.y * f, a.z * f);
-        return c;
-    }
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,8 +16,8 @@ public class HolisticMath
 
     static public float Distance(Coords point1, Coords point2)
     {
-        float diffSquared = Square(point1.x - point2.x) +
-                            Square(point1.y - point2.y) +
+        float diffSquared = Square(point1.x - point2.x) + 
+                            Square(point1.y - point2.y) + 
                             Square(point1.z - point2.z);
         float squareRoot = Mathf.Sqrt(diffSquared);
         return squareRoot;
@@ -27,12 +27,10 @@ public class HolisticMath
     static public Coords Lerp(Coords A, Coords B, float t)
     {
         t = Mathf.Clamp(t, 0, 1);
-
-        Coords vector = new Coords(B.x - A.x, B.y - A.y, B.z - A.z);
-
-        float xt = A.x + vector.x * t;
-        float yt = A.y + vector.y * t;
-        float zt = A.z + vector.z * t;
+        Coords v = new Coords(B.x - A.x, B.y - A.y, B.z - A.z);
+        float xt = A.x + v.x * t;
+        float yt = A.y + v.y * t;
+        float zt = A.z + v.z * t;
 
         return new Coords(xt, yt, zt);
     }
@@ -68,7 +66,7 @@ public class HolisticMath
 
     static public Coords Rotate(Coords vector, float angle, bool clockwise) //in radians
     {
-        if (clockwise)
+        if(clockwise)
         {
             angle = 2 * Mathf.PI - angle;
         }
@@ -77,21 +75,21 @@ public class HolisticMath
         float yVal = vector.x * Mathf.Sin(angle) + vector.y * Mathf.Cos(angle);
         return new Coords(xVal, yVal, 0);
     }
-
+   
     static public Coords Translate(Coords position, Coords facing, Coords vector)
     {
-        if (HolisticMath.Distance(new Coords(0, 0, 0), vector) <= 0) { return position; }
-
+        if (HolisticMath.Distance(new Coords(0, 0, 0), vector) <= 0) return position;
         float angle = HolisticMath.Angle(vector, facing);
         float worldAngle = HolisticMath.Angle(vector, new Coords(0, 1, 0));
-        bool clockwise = HolisticMath.Cross(vector, facing).z < 0;
+        bool clockwise = false;
+        if (HolisticMath.Cross(vector, facing).z < 0)
+            clockwise = true;
 
         vector = HolisticMath.Rotate(vector, angle + worldAngle, clockwise);
 
         float xVal = position.x + vector.x;
         float yVal = position.y + vector.y;
         float zVal = position.z + vector.z;
-
         return new Coords(xVal, yVal, zVal);
     }
 
