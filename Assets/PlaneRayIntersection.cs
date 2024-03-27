@@ -54,7 +54,7 @@ public class PlaneRayIntersection : MonoBehaviour
         float distance = Mathf.Infinity;
         foreach (GameObject fence in fences)
         {
-            float distanceToCheck = Vector3.Distance(hitPoint, fence.transform.position);
+            float distanceToCheck = Vector3.SqrMagnitude(fence.transform.position - hitPoint);
             if (distanceToCheck < distance)
             {
                 distance = distanceToCheck;
