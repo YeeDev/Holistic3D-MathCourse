@@ -27,16 +27,27 @@ public class Line
         type = LINETYPE.SEGMENT;
     }
 
+    public Coords Reflect(Coords normal)
+    {
+        Coords norm = normal.GetNormal();
+        Coords vNorm = v.GetNormal();
+
+        float d = HolisticMath.Dot(norm, vNorm);
+        float vn2 = d * 2;
+        Coords r = vNorm - norm * vn2;
+
+        return r;
+    }
+
     public float IntersectsAt(Plane p)
     {
         Coords normal = HolisticMath.Cross(p.u, p.v);
-
-        if (HolisticMath.Dot(normal, v) == 0) { return float.NaN; }
-
+        if (HolisticMath.Dot(normal, v) == 0)
+            return float.NaN;
         float t = HolisticMath.Dot(normal, p.A - A) / HolisticMath.Dot(normal, v);
         return t;
     }
-
+    
     public float IntersectsAt(Line l)
     {
         if(HolisticMath.Dot(Coords.Perp(l.v),v) == 0)
@@ -51,6 +62,7 @@ public class Line
         }
         return t;
     }
+
 
     public void Draw(float width, Color col)
     {
