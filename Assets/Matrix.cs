@@ -34,7 +34,7 @@ public class Matrix
         return matrix;
     }
 
-    public Coords AsCoord()
+    public Coords AsCoords()
     {
         if (rows == 4 && cols == 1)
         {
