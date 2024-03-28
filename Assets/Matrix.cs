@@ -34,6 +34,15 @@ public class Matrix
         return matrix;
     }
 
+    public Coords AsCoord()
+    {
+        if (rows == 4 && cols == 1)
+        {
+            return new Coords(values[0], values[1], values[2], values[3]);
+        }
+        else { return null; }
+    }
+
     static public Matrix operator +(Matrix a, Matrix b)
     {
         if (a.rows != b.rows || a.cols != b.cols) { return null; }
@@ -49,24 +58,43 @@ public class Matrix
 
     static public Matrix operator *(Matrix a, Matrix b)
     {
-        if (a.rows != b.cols) { return null; }
+        if (a.cols != b.rows) { return null; }
 
-        float[] values = new float[a.rows * b.cols];
+        float[] resultValues = new float[a.rows * b.cols];
 
-        int valueToChange = 0;
-        for (int ar = 0; ar < a.rows; ar++)
+        for (int i = 0; i < a.rows; i++)
         {
-            for (int bc = 0; bc < b.cols; bc++)
+            for (int j = 0; j < b.cols; j++)
             {
-                for (int c = 0; c < a.cols; c++)
+                for (int k = 0; k < a.cols; k++)
                 {
-                    values[valueToChange] += a.values[c + a.cols * ar] * b.values[bc + b.cols * c];
+                    resultValues[i * b.cols + j] += a.values[i * a.cols + k] * b.values[k * b.cols + j];
                 }
-
-                valueToChange++;
             }
         }
 
-        return new Matrix(a.rows, b.cols, values);
+        Matrix result = new Matrix(a.rows, b.cols, resultValues);
+        return result;
+    }
+
+    static public Matrix operator /(Matrix a, Matrix b)
+    {
+        if (a.cols != b.rows) { return null; }
+
+        float[] resultValues = new float[a.rows * b.cols];
+
+        for (int i = 0; i < a.rows; i++)
+        {
+            for (int j = 0; j < b.cols; j++)
+            {
+                for (int k = 0; k < a.cols; k++)
+                {
+                    resultValues[i * b.cols + j] += a.values[i * a.cols + k] / b.values[k * b.cols + j];
+                }
+            }
+        }
+
+        Matrix result = new Matrix(a.rows, b.cols, resultValues);
+        return result;
     }
 }
