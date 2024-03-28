@@ -77,6 +77,7 @@ public class Matrix
         return result;
     }
 
+
     static public Matrix operator /(Matrix a, Matrix b)
     {
         if (a.cols != b.rows) { return null; }

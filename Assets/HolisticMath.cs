@@ -121,6 +121,39 @@ public class HolisticMath
         return result.AsCoords();
     }
 
+    static public Coords Rotate(Coords position, float x, bool clockwiseX,
+                                                 float y, bool clockwiseY,
+                                                 float z, bool clockwiseZ)
+    {
+        x = !clockwiseX ? 2 * Mathf.PI - x : x;
+        y = !clockwiseY ? 2 * Mathf.PI - y : y;
+        z = !clockwiseZ ? 2 * Mathf.PI - z : z;
+
+        float[] rollX = {1, 0, 0, 0,
+                         0, Mathf.Cos(x), -Mathf.Sin(x), 0,
+                         0, Mathf.Sin(x),  Mathf.Cos(x), 0,
+                         0, 0, 0, 1};
+
+        float[] rollY = {Mathf.Cos(y), 0, Mathf.Sin(y), 0,
+                         0, 1, 0, 0,
+                        -Mathf.Sin(y), 0, Mathf.Cos(y), 0,
+                         0, 0, 0, 1};
+
+        float[] rollZ = {Mathf.Cos(z), -Mathf.Sin(z), 0, 0,
+                         Mathf.Sin(z),  Mathf.Cos(z), 0, 0,
+                         0, 0, 1, 0,
+                         0, 0, 0, 1};
+
+        Matrix rotateX = new Matrix(4, 4, rollX);
+        Matrix rotateY = new Matrix(4, 4, rollY);
+        Matrix rotateZ = new Matrix(4, 4, rollZ);
+        Matrix pos = new Matrix(4, 1, position.AsFloats());
+
+        Matrix result = rotateZ * rotateY * rotateX * pos;
+
+        return result.AsCoords();
+    }
+
     static public Coords Cross(Coords vector1, Coords vector2)
     {
         float xMult = vector1.y * vector2.z - vector1.z * vector2.y;
