@@ -183,7 +183,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4e57be903314c436590ac4626432f22f, type: 2}
+  - {fileID: 2100000, guid: d655552ded9a84bcf82e9f622a2cd1ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -894,7 +894,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b5e7be5b86b3d40fb8f1324f11afbf06, type: 2}
+  - {fileID: 2100000, guid: 0b8c5af203f0b44edaecba4c37cc4257, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -983,7 +983,7 @@ MonoBehaviour:
   scaling: {x: 0, y: 0, z: 0}
   centre: {fileID: 221400398}
   angles: {x: 0, y: 0, z: 0}
-  shear: {x: 0, y: 0, z: 0}
+  shear: {x: 0, y: 1, z: 0}
 --- !u!4 &954407200
 Transform:
   m_ObjectHideFlags: 0
@@ -1059,7 +1059,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a05c5567b2ef432a9626838bcf7d4f0, type: 2}
+  - {fileID: 2100000, guid: e90d512c314e84a38aa68390f5679fd4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

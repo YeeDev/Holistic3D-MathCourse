@@ -210,6 +210,26 @@ public class HolisticMath
         return result.AsCoords();
     }
 
+    static public Coords QRotate(Coords position, Coords axis, float angle)
+    {
+        float w = Mathf.Cos(angle / 2);
+        float s = Mathf.Sin(angle / 2);
+        float x = axis.x * s;
+        float y = axis.y * s;
+        float z = axis.z * s;
+
+        float[] values = {1 - 2*y*y - 2*z*z, 2*x*y - 2*w*z,     2*x*z + 2*w*y,     0,
+                          2*x*y + 2*w*z,     1 - 2*x*x - 2*z*z, 2*y*z - 2*w*x,     0,
+                          2*x*z - 2*w*y,     2*y*z + 2*w*z,     1 - 2*x*x - 2*y*y, 0,
+                                  0,                 0,                 0,         1};
+
+        Matrix rotate = new Matrix(4, 4, values);
+        Matrix pos = new Matrix(4, 1, position.AsFloats());
+
+        Matrix result = rotate * pos;
+        return result.AsCoords();
+    }
+
     static public Coords Cross(Coords vector1, Coords vector2)
     {
         float xMult = vector1.y * vector2.z - vector1.z * vector2.y;
