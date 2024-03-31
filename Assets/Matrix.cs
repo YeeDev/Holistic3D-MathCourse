@@ -43,6 +43,13 @@ public class Matrix
         else { return null; }
     }
 
+    public float GetValue(int r, int c)
+    {
+        float mVal = 0;
+        mVal = values[r * cols + c];
+        return mVal;
+    }
+
     static public Matrix operator +(Matrix a, Matrix b)
     {
         if (a.rows != b.rows || a.cols != b.cols) { return null; }

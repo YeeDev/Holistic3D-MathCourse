@@ -154,6 +154,61 @@ public class HolisticMath
         return result.AsCoords();
     }
 
+    static public Matrix GetRotationMatrix(float x, bool clockwiseX,
+                                           float y, bool clockwiseY,
+                                           float z, bool clockwiseZ)
+    {
+        x = !clockwiseX ? 2 * Mathf.PI - x : x;
+        y = !clockwiseY ? 2 * Mathf.PI - y : y;
+        z = !clockwiseZ ? 2 * Mathf.PI - z : z;
+
+        float[] rollX = {1, 0, 0, 0,
+                         0, Mathf.Cos(x), -Mathf.Sin(x), 0,
+                         0, Mathf.Sin(x),  Mathf.Cos(x), 0,
+                         0, 0, 0, 1};
+
+        float[] rollY = {Mathf.Cos(y), 0, Mathf.Sin(y), 0,
+                         0, 1, 0, 0,
+                        -Mathf.Sin(y), 0, Mathf.Cos(y), 0,
+                         0, 0, 0, 1};
+
+        float[] rollZ = {Mathf.Cos(z), -Mathf.Sin(z), 0, 0,
+                         Mathf.Sin(z),  Mathf.Cos(z), 0, 0,
+                         0, 0, 1, 0,
+                         0, 0, 0, 1};
+
+        Matrix rotateX = new Matrix(4, 4, rollX);
+        Matrix rotateY = new Matrix(4, 4, rollY);
+        Matrix rotateZ = new Matrix(4, 4, rollZ);
+
+        Matrix result = rotateZ * rotateY * rotateX;
+
+        return result;
+    }
+
+    static public float GetRotationAxisAngle(Matrix rotation)
+    {
+        float angle = 0;
+
+        Mathf.Acos(0.5f * (rotation.GetValue(0,0) + rotation.GetValue(1, 1) + rotation.GetValue(2, 2) + rotation.GetValue(3, 3) - 2));
+
+        return angle;
+    }
+
+    static public Coords GetRotationAxis(Matrix rotation, float angle)
+    {
+        float vx;
+        float vy;
+        float vz;
+        float s = 2 * Mathf.Sin(angle);
+
+        vx = (rotation.GetValue(2, 1) - rotation.GetValue(1, 2)) / s;
+        vy = (rotation.GetValue(0, 2) - rotation.GetValue(2, 0)) / s;
+        vz = (rotation.GetValue(1, 0) - rotation.GetValue(0, 1)) / s;
+
+        return new Coords(vx, vy, vz, 0);
+    }
+
     static public Coords Shear(Coords position, float shearX, float shearY, float shearZ)
     {
         float[] translateValues = {1, shearY, shearZ, 0,
@@ -212,21 +267,22 @@ public class HolisticMath
 
     static public Coords QRotate(Coords position, Coords axis, float angle)
     {
-        float w = Mathf.Cos(angle / 2);
-        float s = Mathf.Sin(angle / 2);
-        float x = axis.x * s;
-        float y = axis.y * s;
-        float z = axis.z * s;
+        float w = Mathf.Cos(angle * Mathf.Deg2Rad / 2);
+        float s = Mathf.Sin(angle * Mathf.Deg2Rad / 2);
+        Coords normalAxis = axis.GetNormal();
+        float x = normalAxis.x * s;
+        float y = normalAxis.y * s;
+        float z = normalAxis.z * s;
 
         float[] values = {1 - 2*y*y - 2*z*z, 2*x*y - 2*w*z,     2*x*z + 2*w*y,     0,
                           2*x*y + 2*w*z,     1 - 2*x*x - 2*z*z, 2*y*z - 2*w*x,     0,
                           2*x*z - 2*w*y,     2*y*z + 2*w*z,     1 - 2*x*x - 2*y*y, 0,
                                   0,                 0,                 0,         1};
 
-        Matrix rotate = new Matrix(4, 4, values);
+        Matrix quaternionMatrix = new Matrix(4, 4, values);
         Matrix pos = new Matrix(4, 1, position.AsFloats());
 
-        Matrix result = rotate * pos;
+        Matrix result = quaternionMatrix * pos;
         return result.AsCoords();
     }
 
