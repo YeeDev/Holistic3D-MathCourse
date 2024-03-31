@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coords
-{
+public class Coords {
 
     public float x;
     public float y;
@@ -53,6 +52,7 @@ public class Coords
         z = vecpos.z;
     }
 
+
     public Coords GetNormal()
     {
         float magnitude = HolisticMath.Distance(new Coords(0, 0, 0), new Coords(x, y, z));
@@ -61,7 +61,7 @@ public class Coords
 
     public override string ToString()
     {
-        return "(" + x + "," + y + "," + z + ")";
+        return"(" + x + "," + y + "," + z +")";
     }
 
     public Vector3 ToVector()
@@ -69,13 +69,13 @@ public class Coords
         return new Vector3(x, y, z);
     }
 
-    static public Coords operator +(Coords a, Coords b)
+    static public Coords operator+ (Coords a, Coords b)
     {
         Coords c = new Coords(a.x + b.x, a.y + b.y, a.z + b.z);
         return c;
     }
 
-    static public Coords operator -(Coords a, Coords b)
+    static public Coords operator- (Coords a, Coords b)
     {
         Coords c = new Coords(a.x - b.x, a.y - b.y, a.z - b.z);
         return c;
